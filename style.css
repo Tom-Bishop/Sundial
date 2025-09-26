@@ -1,0 +1,437 @@
+/* Hidden Words Grid for hidden.html */
+.hidden-words-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+    margin: 24px 0;
+    padding: 0;
+    list-style: none;
+}
+.hidden-word-box {
+    background: #23252b;
+    color: #ffe066;
+    border: 2px solid #444;
+    border-radius: 8px;
+    padding: 12px 0;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    min-height: 32px;
+    transition: background 0.3s, color 0.3s;
+}
+.hidden-word-box.revealed {
+    background: #ffe066;
+    color: #23252b;
+    border-color: #bfa76f;
+}
+input[type="text"], button {
+    background: #23252b;
+    color: #ffe066;
+    border: 2px solid #444;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 1em;
+    margin: 8px 0;
+    transition: background 0.3s, color 0.3s;
+}
+input[type="text"].light-mode, button.light-mode {
+    background: #fff;
+    color: #23252b;
+    border-color: #bfa76f;
+}
+
+body {
+    min-height: 100vh;
+    background: #181a20 !important;
+    color: #f8f8f8 !important;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    transition: background 0.3s, color 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+    .game-grid {
+      width: 260px;
+      height: 260px;
+      margin: 32px auto 16px auto;
+      position: relative;
+      background: transparent;
+      z-index: 1;
+    }
+.app {
+    max-width: 480px;
+    margin: 32px auto;
+    background: #23252b;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    padding: 24px 16px 32px 16px;
+    color: #f8f8f8;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 16px;
+    color: #ffe066;
+}
+
+.sundial-container {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    margin: 32px auto;
+    background: none;
+}
+
+.sundial-letter, .sundial-center {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #222;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    border: 2px solid #444;
+    z-index: 1;
+}
+.sundial-center {
+    background: #ffb300;
+    color: #222;
+    border: 2px solid #ff9800;
+    z-index: 2;
+}
+body.dark-mode {
+    background: #181818;
+    color: #eee;
+}
+body.dark-mode .sundial-letter {
+    background: #333;
+    color: #fff;
+    border-color: #555;
+}
+body.dark-mode .sundial-center {
+    background: #ffd54f;
+    color: #222;
+    border-color: #ffb300;
+}
+
+.found-words {
+    margin-top: 24px;
+    font-size: 1em;
+    color: #ffe066;
+    text-align: center;
+}
+
+#darkModeToggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    background: #23252b;
+    color: #ffe066;
+    border: none;
+    border-radius: 24px;
+    padding: 8px 18px;
+    font-size: 1em;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+
+body.light-mode {
+    background: #f5f5f5 !important;
+    color: #23252b !important;
+}
+.app.light-mode {
+    background: #fff;
+    color: #23252b;
+}
+.header.light-mode {
+    color: #6b4f1d;
+        position: relative;
+        width: 260px;
+        height: 260px;
+        margin: 0 auto;
+        display: block;
+        background: transparent;
+    }
+.sundial-letter.light-mode {
+    background: #f5f5dc;
+    color: #6b4f1d;
+    border-color: #bfa76f;
+}
+.sundial-center.light-mode {
+    background: #ffe066;
+    color: #6b4f1d;
+    border-color: #bfa76f;
+}
+.found-words.light-mode {
+    color: #23252b;
+}
+input[type="text"], button {
+    background: #23252b;
+    color: #ffe066;
+    border: 2px solid #ffe066;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 1em;
+    margin: 8px 0;
+    transition: background 0.3s, color 0.3s;
+}
+input[type="text"].light-mode, button.light-mode {
+    background: #fff;
+    color: #23252b;
+    border-color: #bfa76f;
+}
+
+.app {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #23252b;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    padding: 24px 16px 32px 16px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.sundial-container {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    margin: 32px auto;
+    background: none;
+}
+
+.sundial-letter, .sundial-center {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #222;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    border: 2px solid #444;
+    z-index: 1;
+}
+.sundial-center {
+    background: #ffb300;
+    color: #222;
+    border: 2px solid #ff9800;
+    z-index: 2;
+}
+body.dark-mode {
+    background: #181818;
+    color: #eee;
+}
+body.dark-mode .sundial-letter {
+    background: #333;
+    color: #fff;
+    border-color: #555;
+}
+body.dark-mode .sundial-center {
+    background: #ffd54f;
+    color: #222;
+    border-color: #ffb300;
+}
+.found-words {
+    margin-top: 24px;
+    font-size: 1em;
+    color: #e0e0e0;
+    text-align: center;
+}
+
+#darkModeToggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    background: #23252b;
+    color: #ffe066;
+    border: none;
+    border-radius: 24px;
+    padding: 8px 18px;
+    font-size: 1em;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+
+body.light-mode {
+    background: #f5f5f5;
+    color: #23252b;
+}
+.app.light-mode {
+    background: #fff;
+}
+.sundial-letter.light-mode {
+    background: #f5f5dc;
+    color: #6b4f1d;
+    border-color: #bfa76f;
+}
+.sundial-center.light-mode {
+    background: #ffe066;
+    color: #6b4f1d;
+    border-color: #bfa76f;
+}
+.found-words.light-mode {
+    color: #23252b;
+}
+/* Sundial Game Styles */
+.sundial-container {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    margin: 32px auto;
+}
+
+.sundial-letter, .sundial-center {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #222;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    border: 2px solid #444;
+    z-index: 1;
+}
+.sundial-center {
+    background: #ffb300;
+    color: #222;
+    border: 2px solid #ff9800;
+    z-index: 2;
+}
+body.dark-mode {
+    background: #181818;
+    color: #eee;
+}
+body.dark-mode .sundial-letter {
+    background: #333;
+    color: #fff;
+    border-color: #555;
+}
+body.dark-mode .sundial-center {
+    background: #ffd54f;
+    color: #222;
+    border-color: #ffb300;
+}
+
+.found-words {
+    margin-top: 24px;
+    font-size: 1em;
+    color: #333;
+    text-align: center;
+}
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f8fafc;
+    color: #222;
+    margin: 0;
+}
+.app {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2em;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2em;
+}
+nav a {
+    margin-left: 1em;
+    text-decoration: none;
+    color: #0ea5e9;
+    font-weight: 500;
+}
+nav a:hover {
+    text-decoration: underline;
+}
+.game-info {
+    margin-bottom: 1em;
+    font-size: 1.2em;
+}
+.game-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-bottom: 1em;
+}
+.word-cell {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 0.5em 1em;
+    font-size: 1em;
+    min-width: 80px;
+    text-align: center;
+    transition: background 0.2s;
+}
+.word-cell.found {
+    background: #bbf7d0;
+    border-color: #22c55e;
+}
+input[type="text"] {
+    padding: 0.5em;
+    font-size: 1em;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    margin-right: 0.5em;
+}
+button {
+    padding: 0.5em 1em;
+    font-size: 1em;
+    border-radius: 6px;
+    border: none;
+    background: #0ea5e9;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+}
+button:disabled {
+    background: #e5e7eb;
+    color: #888;
+    cursor: not-allowed;
+}
+.modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal.hidden {
+    display: none;
+}
+.modal-content {
+    background: #fff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+    text-align: center;
+}
+@media (max-width: 600px) {
+    .app { padding: 1em; }
+    .word-cell { min-width: 60px; font-size: 0.9em; }
+}

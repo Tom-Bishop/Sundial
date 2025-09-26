@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sundial Word Puzzle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button id="darkModeToggle">🌙 Dark Mode</button>
+    <div class="app">
+        <header class="header">
+            <h1>Sundial</h1>
+            <nav>
+                <a href="hidden.html">Hidden Words</a>
+                <a href="leaderboard.html">Leaderboard</a>
+            </nav>
+        </header>
+        <main>
+            <div class="game-info">
+                <span id="timer">00:00</span>
+            </div>
+            <div class="game-grid" id="gameGrid"></div>
+            <button id="randomiseBtn" style="margin:16px auto;display:block;">🔀 Randomise Letters</button>
+            <input type="text" id="wordInput" placeholder="Type a word..." autocomplete="off" autofocus>
+            <button id="submitBtn">Submit</button>
+        </main>
+        <div id="completionModal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Congratulations!</h2>
+                <p>You found all words in <span id="finalTime"></span>!</p>
+                <input type="text" id="playerName" placeholder="Enter your name">
+                <button id="submitScoreBtn">Submit Score</button>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
 
