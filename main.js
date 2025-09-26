@@ -189,12 +189,15 @@ async function startGame() {
         }
         return result;
     }
+    // Letters based on day hash
     let lettersArr = LETTERS.split('');
     lettersArr = seededShuffle(lettersArr, seed);
     sundialLetters = lettersArr.slice(0, 9);
     centerLetter = sundialLetters[0];
-    validWords = filterValidWords(dictionary, sundialLetters, centerLetter);
-    validWords = validWords.slice(0, 15);
+    // Words based on day hash and letters
+    let filteredWords = filterValidWords(dictionary, sundialLetters, centerLetter);
+    filteredWords = seededShuffle(filteredWords, seed);
+    validWords = filteredWords.slice(0, 15);
     foundWords = [];
     renderSundial();
     renderHiddenWords();
