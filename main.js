@@ -114,7 +114,7 @@ function filterValidWords(wordList, letters, center) {
     return wordList.filter(word => {
         word = word.toUpperCase();
         if (!word.includes(center)) return false;
-        if (word.length < 4) return false;
+        if (word.length < 4 || word.length > 9) return false;
         let wheelCounts = {};
         for (let l of letters) wheelCounts[l] = (wheelCounts[l] || 0) + 1;
         let wordCounts = {};
@@ -126,7 +126,7 @@ function filterValidWords(wordList, letters, center) {
         // Exclude simple plurals, abbreviations, proper nouns
         if (!isValidWord(word, dictionary)) return false;
         return true;
-    }).slice(0, 25);
+    });
 }
 
 function checkWord(input) {
@@ -182,14 +182,15 @@ function checkWord(input) {
 
 async function startGame() {
     if (!dictionary.length) await loadDictionary();
-    // Generate random letters first
     let tries = 0;
     do {
-        sundialLetters = getDailyLetters();
-        centerLetter = sundialLetters[4];
+        sundialLetters = getRandomLetters();
+        centerLetter = sundialLetters[0];
         validWords = filterValidWords(dictionary, sundialLetters, centerLetter);
         tries++;
-    } while ((validWords.length < 15 || validWords.length > 25) && tries < 20);
+    } while (validWords.length < 1 && tries < 20);
+    // Limit to 15 words max
+    validWords = validWords.slice(0, 15);
     foundWords = [];
     renderSundial();
     startTime = Date.now();
@@ -211,8 +212,8 @@ function renderSundial() {
     // Position 8 letters around center
     const isLight = document.body.classList.contains('light-mode');
     // Render 8 outer letters in a circle
-    for (let i = 0; i < 8; i++) {
-        const angle = (i / 8) * 2 * Math.PI;
+    for (let i = 1; i < 9; i++) {
+        const angle = ((i-1) / 8) * 2 * Math.PI;
         const x = 120 + 90 * Math.cos(angle);
         const y = 120 + 90 * Math.sin(angle);
         const letterDiv = document.createElement('div');
@@ -223,14 +224,14 @@ function renderSundial() {
         letterDiv.textContent = sundialLetters[i];
         container.appendChild(letterDiv);
     }
-    // Center letter (always sundialLetters[4])
+    // Center letter (always sundialLetters[0])
     const centerDiv = document.createElement('div');
     centerDiv.className = 'sundial-center' + (isLight ? ' light-mode' : '');
     centerDiv.style.position = 'absolute';
     centerDiv.style.left = '50%';
     centerDiv.style.top = '50%';
     centerDiv.style.transform = 'translate(-50%, -50%)';
-    centerDiv.textContent = sundialLetters[4];
+    centerDiv.textContent = sundialLetters[0];
     container.appendChild(centerDiv);
     container.style.position = 'relative';
     container.style.width = '240px';
