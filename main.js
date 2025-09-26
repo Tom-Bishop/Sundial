@@ -163,13 +163,8 @@ function checkWord(input) {
         return;
     }
     foundWords.push(word);
-    // Store found words in localStorage for hidden.html
-    const foundDate = new Date();
-    const foundKey = `sundial_${foundDate.getFullYear()}_${foundDate.getMonth()+1}_${foundDate.getDate()}_found`;
-    localStorage.setItem(foundKey, JSON.stringify(foundWords));
-    // Call setFoundWord for hidden.html integration
-    if (window.setFoundWord) window.setFoundWord(word);
     renderSundial();
+    renderHiddenWords();
     input.value = '';
     if (foundWords.length === validWords.length) {
         endGame();
@@ -182,17 +177,27 @@ function checkWord(input) {
 
 async function startGame() {
     if (!dictionary.length) await loadDictionary();
-    let tries = 0;
-    do {
-        sundialLetters = getRandomLetters();
-        centerLetter = sundialLetters[0];
-        validWords = filterValidWords(dictionary, sundialLetters, centerLetter);
-        tries++;
-    } while (validWords.length < 1 && tries < 20);
-    // Limit to 15 words max
+    // Generate daily hash for consistent puzzle
+    const today = new Date();
+    let seed = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate();
+    function seededShuffle(array, seed) {
+        let result = array.slice();
+        for (let i = result.length - 1; i > 0; i--) {
+            seed = (seed * 9301 + 49297) % 233280;
+            let j = Math.floor(seed / 233280 * (i + 1));
+            [result[i], result[j]] = [result[j], result[i]];
+        }
+        return result;
+    }
+    let lettersArr = LETTERS.split('');
+    lettersArr = seededShuffle(lettersArr, seed);
+    sundialLetters = lettersArr.slice(0, 9);
+    centerLetter = sundialLetters[0];
+    validWords = filterValidWords(dictionary, sundialLetters, centerLetter);
     validWords = validWords.slice(0, 15);
     foundWords = [];
     renderSundial();
+    renderHiddenWords();
     startTime = Date.now();
     timerInterval = setInterval(updateTimer, 1000);
     document.getElementById('completionModal').classList.add('hidden');
@@ -239,6 +244,21 @@ function renderSundial() {
     grid.appendChild(container);
 
     // No found words list below the sundial; hidden words are shown in the aside on the right
+}
+
+function renderHiddenWords() {
+    const list = document.getElementById('hiddenWordsList');
+    if (!list) return;
+    list.innerHTML = '';
+    validWords.forEach(word => {
+        const li = document.createElement('li');
+        li.className = 'hidden-word-box';
+        li.textContent = foundWords.includes(word) ? word : '???';
+        list.appendChild(li);
+    });
+    // Update words left indicator
+    const indicator = document.getElementById('wordsLeftIndicator');
+    if (indicator) indicator.textContent = `${foundWords.length}/${validWords.length}`;
 }
 
 document.getElementById('submitBtn').addEventListener('click', () => {
