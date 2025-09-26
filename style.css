@@ -171,7 +171,7 @@ body {
     justify-content: center;
 }
 
-    .game-grid {
+.game-grid {
       width: 260px;
       height: 260px;
       margin: 32px auto 16px auto;
@@ -179,6 +179,7 @@ body {
       background: transparent;
       z-index: 1;
     }
+    
 .app {
     max-width: 480px;
     margin: 32px auto;
