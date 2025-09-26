@@ -120,7 +120,7 @@ body.dark-mode #sundial-box {
 /* Hidden Words Grid for hidden.html */
 .hidden-words-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
     margin: 24px 0;
     padding: 0;
