@@ -95,7 +95,7 @@ function isValidWord(word, dictionary) {
 // Get a daily random set of 9 unique letters
 function getDailyLetters() {
     const today = new Date();
-    const seed = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate();
+    let seed = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate();
     let arr = [];
     let lettersArr = LETTERS.split('');
     for (let i = lettersArr.length - 1; i > 0; i--) {
