@@ -182,20 +182,15 @@ function checkWord(input) {
 
 async function startGame() {
     if (!dictionary.length) await loadDictionary();
-    sundialLetters = getDailyLetters();
-    centerLetter = sundialLetters[4];
-    foundWords = [];
-    // Find all valid words for today's letters
-    let allValid = filterValidWords(dictionary, sundialLetters, centerLetter);
-    // If not enough words, reshuffle until we get 15-25
+    // Generate random letters first
     let tries = 0;
-    while ((allValid.length < 15 || allValid.length > 25) && tries < 20) {
+    do {
         sundialLetters = getDailyLetters();
         centerLetter = sundialLetters[4];
-        allValid = filterValidWords(dictionary, sundialLetters, centerLetter);
+        validWords = filterValidWords(dictionary, sundialLetters, centerLetter);
         tries++;
-    }
-    validWords = allValid;
+    } while ((validWords.length < 15 || validWords.length > 25) && tries < 20);
+    foundWords = [];
     renderSundial();
     startTime = Date.now();
     timerInterval = setInterval(updateTimer, 1000);
