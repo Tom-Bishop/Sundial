@@ -12,13 +12,13 @@
         <header class="header">
             <h1>Sundial</h1>
             <nav>
-                <a href="hidden.html">Hidden Words</a>
                 <a href="leaderboard.html">Leaderboard</a>
             </nav>
         </header>
         <main>
-            <div class="game-info">
-                <span id="timer">00:00</span>
+            <div class="game-info" aria-live="polite">
+                <span id="timer" class="timer">00:00</span>
+                <span id="progress" class="progress-count">0/0</span>
             </div>
             <div class="game-layout">
                 <div id="sundial-center-wrap">
@@ -27,13 +27,21 @@
                     </div>
                 </div>
                 <aside id="hidden-words-aside">
-                    <h3>Hidden Words <span id="wordsLeftIndicator">0/0</span></h3>
+                    <h3>Words <span id="wordsLeftIndicator">0/0</span></h3>
                     <ul id="hiddenWordsList" class="hidden-words-grid"></ul>
+                    <div class="aside-actions">
+                        <button id="revealBtn" type="button" title="Reveal all words (give up)">Reveal</button>
+                        <button id="shareBtn" type="button" title="Copy share text">Share</button>
+                    </div>
                 </aside>
             </div>
-            <button id="randomiseBtn" style="margin:16px auto;display:block;">🔀 Randomise Letters</button>
-            <input type="text" id="wordInput" placeholder="Type a word..." autocomplete="off" autofocus>
-            <button id="submitBtn">Submit</button>
+            <div class="controls">
+                <button id="shuffleBtn" type="button" class="secondary" title="Shuffle outer letters">🔀 Shuffle</button>
+                <input aria-label="Enter a word" type="text" id="wordInput" placeholder="Type a word..." autocomplete="off" autofocus>
+                <button id="submitBtn" type="button">Submit</button>
+                <button id="clearBtn" type="button" class="secondary">Clear</button>
+            </div>
+            <p class="instructions">Form words (4-9 letters) using these letters and always include the center letter. Daily puzzle resets at midnight.</p>
         </main>
         <div id="completionModal" class="modal hidden">
             <div class="modal-content">

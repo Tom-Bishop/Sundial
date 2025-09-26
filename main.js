@@ -1,3 +1,7 @@
+// ===================== THE SUNDIAL GAME CORE ===================== //
+const MAX_WORDS = 15;
+const MIN_WORD_LEN = 4;
+
 // Dark mode toggle logic
 function setupDarkModeToggle() {
     document.body.classList.add('dark-mode');
@@ -132,7 +136,7 @@ function filterValidWords(wordList, letters, center) {
 
 function checkWord(input) {
     const word = input.value.trim().toUpperCase();
-    if (word.length < 4) {
+    if (word.length < MIN_WORD_LEN) {
         alert('Word must be at least 4 letters.');
         return;
     }
@@ -176,6 +180,24 @@ function checkWord(input) {
     localStorage.setItem(wordsKey, JSON.stringify(validWords));
 }
 
+function updateProgressIndicators(){
+    const indicator = document.getElementById('wordsLeftIndicator');
+    const progress = document.getElementById('progress');
+    if (indicator) indicator.textContent = `${foundWords.length}/${validWords.length}`;
+    if (progress) progress.textContent = `${foundWords.length}/${validWords.length}`;
+}
+
+function shuffleOuterLetters() {
+    if(!sundialLetters.length) return;
+    const outer = sundialLetters.slice(1);
+    for (let i = outer.length -1; i>0; i--) {
+        const j = Math.floor(Math.random() * (i+1));
+        [outer[i], outer[j]] = [outer[j], outer[i]];
+    }
+    sundialLetters = [sundialLetters[0], ...outer];
+    renderSundial();
+}
+
 async function startGame() {
     if (!dictionary.length) await loadDictionary();
     // Generate daily hash for consistent puzzle
@@ -198,7 +220,7 @@ async function startGame() {
     // Words based on day hash and letters
     let filteredWords = filterValidWords(dictionary, sundialLetters, centerLetter);
     filteredWords = seededShuffle(filteredWords, seed);
-    validWords = filteredWords.slice(0, 15);
+    validWords = filteredWords.slice(0, MAX_WORDS);
     foundWords = [];
     renderSundial();
     renderHiddenWords();
@@ -207,6 +229,7 @@ async function startGame() {
     document.getElementById('completionModal').classList.add('hidden');
     document.getElementById('wordInput').value = '';
     document.getElementById('timer').textContent = '00:00';
+    updateProgressIndicators();
 }
 
 function renderSundial() {
@@ -254,18 +277,32 @@ function renderHiddenWords() {
         list.appendChild(li);
     });
     // Update words left indicator
-    const indicator = document.getElementById('wordsLeftIndicator');
-    if (indicator) indicator.textContent = `${foundWords.length}/${validWords.length}`;
+    updateProgressIndicators();
 }
 
 document.getElementById('submitBtn').addEventListener('click', () => {
     checkWord(document.getElementById('wordInput'));
 });
 
-document.getElementById('wordInput').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        checkWord(e.target);
-    }
+document.getElementById('wordInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') { checkWord(e.target); } });
+
+// New UI controls
+document.getElementById('shuffleBtn')?.addEventListener('click', shuffleOuterLetters);
+document.getElementById('clearBtn')?.addEventListener('click', () => { const inp=document.getElementById('wordInput'); if(inp){ inp.value=''; inp.focus(); }});
+document.getElementById('revealBtn')?.addEventListener('click', () => {
+    if(!confirm('Reveal all words? This ends the puzzle.')) return;
+    foundWords = [...validWords];
+    renderHiddenWords();
+    updateProgressIndicators();
+});
+document.getElementById('shareBtn')?.addEventListener('click', () => {
+    if(!validWords.length) return;
+    const pct = Math.round((foundWords.length/validWords.length)*100);
+    const share = `Sundial ${foundWords.length}/${validWords.length} (${pct}%) Letters: ${sundialLetters.join('')} Center:${centerLetter}`;
+    navigator.clipboard.writeText(share).then(()=>{
+        const btn = document.getElementById('shareBtn');
+        if(btn){ btn.classList.add('flash'); setTimeout(()=>btn.classList.remove('flash'),900); }
+    });
 });
 
 document.getElementById('submitScoreBtn').addEventListener('click', () => {
@@ -276,18 +313,4 @@ document.getElementById('submitScoreBtn').addEventListener('click', () => {
     startGame();
 });
 
-window.addEventListener('DOMContentLoaded', () => {
-    startGame();
-    // Add Give Up button only once
-    const main = document.querySelector('main');
-    if (main && !document.getElementById('giveUpBtn')) {
-        const giveUpBtn = document.createElement('button');
-        giveUpBtn.id = 'giveUpBtn';
-        giveUpBtn.textContent = 'Give Up / Reveal All';
-        giveUpBtn.style.marginTop = '16px';
-        main.appendChild(giveUpBtn);
-        giveUpBtn.addEventListener('click', () => {
-            alert('All possible words: ' + validWords.join(', '));
-        });
-    }
-});
+// Remove legacy duplicate DOMContentLoaded listener at end (integrated above)

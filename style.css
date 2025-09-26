@@ -570,3 +570,36 @@ button:disabled {
     .app { padding: 1em; }
     .word-cell { min-width: 60px; font-size: 0.9em; }
 }
+/* ===== New Overrides & Enhancements ===== */
+/* Aside refinement */
+#hidden-words-aside { min-width:260px; background:#23252b; border-radius:18px; box-shadow:0 4px 18px rgba(0,0,0,.35); padding:18px 16px 26px 16px; color:#ffe066; display:flex; flex-direction:column; align-items:stretch; gap:12px; position:static; top:auto; right:auto; max-height:520px; }
+#hidden-words-aside h3 { margin:0 0 4px 0; font-size:1.05rem; letter-spacing:.5px; font-weight:600; text-align:center; }
+.hidden-words-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:4px 0 8px 0; padding:0; list-style:none; }
+.hidden-word-box { background:#2b2e34; color:#ffe066; border:1px solid #505458; border-radius:10px; padding:10px 0; text-align:center; font-size:.9rem; font-weight:600; min-height:34px; letter-spacing:.5px; transition:background .25s,color .25s,border-color .25s; }
+.hidden-word-box.revealed { background:#ffe066; color:#23252b; border-color:#bfa76f; }
+body.dark-mode .hidden-word-box { background:#1f2023; border-color:#3a3d42; }
+body.dark-mode .hidden-word-box.revealed { background:#ffe066; color:#23252b; }
+
+/* Wheel tweaks */
+.sundial-wheel { width:260px; height:260px; margin:4px auto 8px auto; }
+.letter-cell { width:60px; height:60px; border:2px solid #3e444a; font-size:1.85rem; background:radial-gradient(circle at 30% 30%, #3d4046, #1f2226); color:#f5f7fa; }
+.center-letter { background:radial-gradient(circle at 25% 25%, #ffe58f, #ffb300); color:#222; border-color:#ffb300; }
+
+/* Controls */
+.controls { display:flex; gap:8px; align-items:center; justify-content:center; flex-wrap:wrap; margin:8px auto 12px auto; }
+.controls input { flex:1 1 160px; }
+.controls button.secondary { background:#394048; border:1px solid #4a525a; }
+.controls button.secondary:hover { background:#465059; }
+
+.progress-count { margin-left:12px; font-size:.9rem; opacity:.85; }
+.instructions { font-size:.75rem; text-align:center; max-width:520px; margin:0 auto 12px; opacity:.65; }
+
+.aside-actions { display:flex; gap:8px; justify-content:space-between; }
+.aside-actions button { flex:1; background:#394048; color:#ffe066; border:1px solid #525960; padding:6px 8px; font-size:.8rem; border-radius:8px; cursor:pointer; }
+.aside-actions button:hover { background:#485159; }
+body.dark-mode .aside-actions button { background:#2d3136; border-color:#444b52; }
+body.dark-mode .aside-actions button:hover { background:#3a4046; }
+
+/* Flash animation for share */
+.flash { animation: flashBg .9s ease-in-out; }
+@keyframes flashBg { 0%{background:#ffe066;color:#222;} 100%{} }
