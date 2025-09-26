@@ -238,11 +238,7 @@ function renderSundial() {
     container.style.height = '240px';
     grid.appendChild(container);
 
-    // Show found words count and list
-    const foundList = document.createElement('div');
-    foundList.className = 'found-words' + (isLight ? ' light-mode' : '');
-    foundList.innerHTML = `<span class="word-count"><span class="word-count-icon">🔎</span> ${foundWords.length}/${validWords.length}</span><br><strong>Found Words:</strong> ` + foundWords.join(', ');
-    grid.appendChild(foundList);
+    // No found words list below the sundial; hidden words are shown in the aside on the right
 }
 
 document.getElementById('submitBtn').addEventListener('click', () => {
