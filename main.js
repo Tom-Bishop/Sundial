@@ -62,8 +62,9 @@ function getRandomLetters() {
 }
 
 async function loadDictionary() {
-    const response = await fetch('dictionary.json');
-    dictionary = await response.json();
+    const response = await fetch('words_dictionary.json');
+    const dictObj = await response.json();
+    dictionary = Object.keys(dictObj);
 }
 
 function getDailyWords() {
