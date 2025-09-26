@@ -7,12 +7,11 @@ function getTodayKey() {
 }
 
 function getHiddenWords() {
-    // Try to get from localStorage (set by main.js when puzzle is generated)
+    // Only show words from localStorage (set by main.js when puzzle is generated)
     const key = getTodayKey();
     const words = localStorage.getItem(key);
     if (words) return JSON.parse(words);
-    // fallback: demo words
-    return ["CLOCK", "CLOAK", "COCK", "COAL", "LOCAL", "CALL", "LOCK", "COLA", "LACK", "COCKTAIL", "TACK", "TALK", "COAT", "CAT", "ACT", "OCTAL", "ALT", "LAT", "LOT", "OAT", "TOC", "TACKLE"];
+    return [];
 }
 
 function getFoundWords() {
