@@ -212,27 +212,35 @@ async function startGame() {
 function renderSundial() {
     const grid = document.getElementById('gameGrid');
     grid.innerHTML = '';
-    grid.style.display = 'flex';
-    grid.style.justifyContent = 'center';
-    grid.style.alignItems = 'center';
-    // Create sundial layout using modern structure
-    const sundial = document.createElement('div');
-    sundial.className = 'sundial sundial-9th';
-    sundial.style.transform = 'scale(1.27)';
-    // 9 cells: 8 outer, 1 center
-    for (let i = 0; i < 9; i++) {
-        const isCentral = i === 4;
-        const cell = document.createElement('div');
-        cell.setAttribute('data-letter', sundialLetters[i]);
-        cell.setAttribute('data-index', i);
-        cell.setAttribute('data-central', isCentral ? 'true' : 'false');
-        const inner = document.createElement('div');
-        inner.className = 'inner-cell';
-        inner.textContent = sundialLetters[i];
-        cell.appendChild(inner);
-        sundial.appendChild(cell);
+    const wheel = document.createElement('div');
+    wheel.className = 'sundial-wheel';
+
+    // Center letter is index 0 in sundialLetters
+    const center = document.createElement('button');
+    center.type = 'button';
+    center.className = 'letter-cell center-letter';
+    center.textContent = sundialLetters[0];
+    center.setAttribute('aria-label', `Center letter ${sundialLetters[0]}`);
+    wheel.appendChild(center);
+
+    // Outer 8 letters arranged evenly in a circle
+    const radius = 95; // px
+    const cx = 120; // center x of wheel container
+    const cy = 120; // center y
+    for (let i = 1; i < 9; i++) {
+        const angle = ((i-1) / 8) * 2 * Math.PI - Math.PI / 2; // start at top
+        const x = cx + radius * Math.cos(angle);
+        const y = cy + radius * Math.sin(angle);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'letter-cell outer-letter';
+        btn.style.left = x + 'px';
+        btn.style.top = y + 'px';
+        btn.textContent = sundialLetters[i];
+        btn.setAttribute('data-index', i.toString());
+        wheel.appendChild(btn);
     }
-    grid.appendChild(sundial);
+    grid.appendChild(wheel);
 }
 
 function renderHiddenWords() {
