@@ -214,39 +214,24 @@ function renderSundial() {
     grid.style.display = 'flex';
     grid.style.justifyContent = 'center';
     grid.style.alignItems = 'center';
-    // Create sundial layout
-    const container = document.createElement('div');
-    container.className = 'sundial-container';
-    // Position 8 letters around center
-    const isLight = document.body.classList.contains('light-mode');
-    // Render 8 outer letters in a circle
-    for (let i = 1; i < 9; i++) {
-        const angle = ((i-1) / 8) * 2 * Math.PI;
-        const x = 120 + 90 * Math.cos(angle);
-        const y = 120 + 90 * Math.sin(angle);
-        const letterDiv = document.createElement('div');
-        letterDiv.className = 'sundial-letter' + (isLight ? ' light-mode' : '');
-        letterDiv.style.position = 'absolute';
-        letterDiv.style.left = `${x}px`;
-        letterDiv.style.top = `${y}px`;
-        letterDiv.textContent = sundialLetters[i];
-        container.appendChild(letterDiv);
+    // Create sundial layout using modern structure
+    const sundial = document.createElement('div');
+    sundial.className = 'sundial sundial-9th';
+    sundial.style.transform = 'scale(1.27)';
+    // 9 cells: 8 outer, 1 center
+    for (let i = 0; i < 9; i++) {
+        const isCentral = i === 4;
+        const cell = document.createElement('div');
+        cell.setAttribute('data-letter', sundialLetters[i]);
+        cell.setAttribute('data-index', i);
+        cell.setAttribute('data-central', isCentral ? 'true' : 'false');
+        const inner = document.createElement('div');
+        inner.className = 'inner-cell';
+        inner.textContent = sundialLetters[i];
+        cell.appendChild(inner);
+        sundial.appendChild(cell);
     }
-    // Center letter (always sundialLetters[0])
-    const centerDiv = document.createElement('div');
-    centerDiv.className = 'sundial-center' + (isLight ? ' light-mode' : '');
-    centerDiv.style.position = 'absolute';
-    centerDiv.style.left = '50%';
-    centerDiv.style.top = '50%';
-    centerDiv.style.transform = 'translate(-50%, -50%)';
-    centerDiv.textContent = sundialLetters[0];
-    container.appendChild(centerDiv);
-    container.style.position = 'relative';
-    container.style.width = '240px';
-    container.style.height = '240px';
-    grid.appendChild(container);
-
-    // No found words list below the sundial; hidden words are shown in the aside on the right
+    grid.appendChild(sundial);
 }
 
 function renderHiddenWords() {
