@@ -69,7 +69,7 @@ async function loadDictionary() {
 function getDailyWords() {
     // Daily selection from dictionary
     const today = new Date();
-    const seed = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate();
+    let seed = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate();
     function seededShuffle(array, seed) {
         let result = array.slice();
         for (let i = result.length - 1; i > 0; i--) {
